@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viwepoint" content="width=device-width, initial-scale=1">
+    <title>
+        32-bit Integer Calculator
+    </title>
+    <link rel="stylesheet" href="task.css">
+</head>
+
+<body>
+    
+    <div class="container">
+    
+        <h1> 32-bit Integer Calculator </h1>
+        <div class="bit-selector">
+            <label for="bits">Enter 32 bits :</label>
+            <div id="bit-checkboxes"></div>
+        </div>
+        
+        
+        <div class="alignment-selector">
+            
+            <label>
+                <input type="radio" name="alignment" value="left" checked> Left-align
+            </label>
+            <label>
+                <input type="radio" name="alignment" value="right"> Right-align
+            </label>
+        </div>
+
+        <button id="calculate"> Calculate value </button>
+        <div class="Result">
+            <h2>Result:</h2>
+            <p id="result-value-decimal">Decimal:0</p>
+            <p id="result-value-binary">Binary:0000000000000000000000000000000</p>
+            <p id="result-value-hex">Hex:0</p>
+            <p id="result-value-octal">Octal:0</p>
+        </div>
+
+        
+    </div>
+    <script>
+        var deviceInfo = navigator.userAgent;
+        document.getElementById("device-info").innerText = deviceInfo;
+    </script>
+
+    <script src="Task1.js"></script>
+</body>
+
+</html>
