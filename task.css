@@ -75,11 +75,6 @@ td {
   text-align: center;
 }
 
-@media (max-width: 991px) {
-  .container {
-      width: 90%;
-      padding: 10px;
-  }
 
   button {
       width: 100%;
