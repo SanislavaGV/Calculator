@@ -12,20 +12,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
     table.appendChild(tbody);
     bitCheckboxesContainer.appendChild(table);
 
-
     const rightInput = document.querySelector('input[type="radio"][value="right"]');
-    
     const leftInput = document.querySelector('input[type="radio"][value="left"]');
 
-    // създаваме чекбоксовете
     function createCheckboxes(start, end, step) {
+        checkboxRow.innerHTML = '';  // Clear previous checkboxes
+        labelRow.innerHTML = '';     // Clear previous labels
+
         for (let i = start; i !== end; i += step) {
             const checkboxCell = document.createElement('td');
             const labelCell = document.createElement('td');
 
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
-            
             checkbox.id = `bit-${i}`;
 
             const label = document.createElement('label');
@@ -41,12 +40,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     }
 
-    //ревърс на редовете 
-    if (rightInput.checked = true) {
-        createCheckboxes(31, -1, -1);
-    }
+    // Initial checkbox creation
+    createCheckboxes(31, -1, -1);
 
-    
     function reverseRowContents() {
         const labelCells = Array.from(labelRow.children);
         const checkboxCells = Array.from(checkboxRow.children);
@@ -55,7 +51,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         checkboxCells.reverse().forEach(cell => checkboxRow.appendChild(cell));
     }
 
-    
     rightInput.addEventListener('change', (event) => {
         if (event.target.checked) {
             reverseRowContents();
@@ -67,13 +62,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
             reverseRowContents();
         }
     });
-
-    console.log(checkboxArray);
 });
-//калкулиране на резултата
+
+// Calculation of result
 document.getElementById('calculate').addEventListener('click', function () {
     const alignment = document.querySelector('input[name="alignment"]:checked');
-    const alignmentTest = alignment.value;
     const bitValues = [];
 
     for (let i = 0; i < 32; i++) {
@@ -81,21 +74,23 @@ document.getElementById('calculate').addEventListener('click', function () {
         bitValues.push(checkbox.checked ? 1 : 0);
     }
 
-    if (alignmentTest === 'left') {
+    if (alignment.value === 'left') {
         bitValues.reverse();
     }
 
-    let resultValue = 0;
+    let resultValue = 0n;
     for (let i = 0; i < bitValues.length; i++) {
-        resultValue += bitValues[i] * (1 << i);
+        if (bitValues[i] === 1) {
+            resultValue += 1n << BigInt(i);
+        }
     }
 
     const binaryValue = bitValues.reverse().join('');
     const hexValue = resultValue.toString(16);
     const octalValue = resultValue.toString(8);
 
-    document.getElementById('result-value-decimal').textContent = `Decimal:${resultValue}`;
-    document.getElementById('result-value-binary').textContent = `Binary:${binaryValue}`;
-    document.getElementById('result-value-hex').textContent = `Hexadecimal:${hexValue}`;
-    document.getElementById('result-value-octal').textContent = `Octal:${octalValue}`;
+    document.getElementById('result-value-decimal').textContent = `Decimal: ${resultValue}`;
+    document.getElementById('result-value-binary').textContent = `Binary: ${binaryValue}`;
+    document.getElementById('result-value-hex').textContent = `Hexadecimal: ${hexValue}`;
+    document.getElementById('result-value-octal').textContent = `Octal: ${octalValue}`;
 });
